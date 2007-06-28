@@ -1,6 +1,6 @@
 %define name 		xinetd
 %define version 	2.3.14
-%define release		%mkrel 5
+%define release		%mkrel 6
 
 Name: 		%{name}
 Version: 	%{version}
@@ -117,6 +117,7 @@ install -m 0644 %SOURCE50 FAQ.html
 #chmod a+r INSTALL README FAQ.html CHANGELOG COPYRIGHT xinetd/sample.conf
 
 %build
+%serverbuild
 %configure2_5x  --with-libwrap --with-inet6
 %make
 
