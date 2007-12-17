@@ -36,7 +36,6 @@ Obsoletes:  xinetd-devel
 Obsoletes:  netkit-base
 Provides:   xinetd-devel
 Provides:   netkit-base
-BuildRoot: 	%{_tmppath}/%{name}-%{version}
 
 %description
 xinetd is a powerful replacement for inetd.
