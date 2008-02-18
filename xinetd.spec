@@ -5,7 +5,7 @@
 Name: 		%{name}
 Version: 	%{version}
 Release: 	%{release}
-Summary: 	Xinetd is a powerful replacement for inetd
+Summary: 	Powerful replacement for inetd
 Group: 		System/Base
 License: 	BSD
 URL: 		http://www.xinetd.org
