@@ -1,6 +1,6 @@
 %define name 		xinetd
 %define version 	2.3.14
-%define release		%mkrel 8
+%define release		%mkrel 9
 
 Name: 		%{name}
 Version: 	%{version}
