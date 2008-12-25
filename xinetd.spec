@@ -1,11 +1,7 @@
-%define name 		xinetd
-%define version 	2.3.14
-%define release		%mkrel 9
-
-Name: 		%{name}
-Version: 	%{version}
-Release: 	%{release}
 Summary: 	Powerful replacement for inetd
+Name: 		xinetd
+Version: 	2.3.14
+Release: 	%mkrel 10
 Group: 		System/Base
 License: 	BSD
 URL: 		http://www.xinetd.org
@@ -36,7 +32,7 @@ Obsoletes:  xinetd-devel
 Obsoletes:  netkit-base
 Provides:   xinetd-devel
 Provides:   netkit-base
-BuildRoot: 	%{_tmppath}/%{name}-%{version}
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 xinetd is a powerful replacement for inetd.
