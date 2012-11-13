@@ -1,0 +1,18 @@
+sources:
+  "convert.pl:"	28cc592c0d034b3c552ad242ae9fb541ba5e7c8a
+  "faq.html:"	60c92cbdbb1c7e0364c648cd6cf160dad157a940
+  "xinetd-2.3.14.tar.bz2:"	8b692b37fdb885a9caeb52fa2ea1c91615e8ef26
+  "xinetd-chargen:"	7881a4d5036270ddecbb7f350a47bb0714cc4f8b
+  "xinetd.default.config:"	7f0ee1287d9def3124f5d109e3311a23473d8907
+  "xinetd-echo:"	a3d3363d22c16cbbf03cca7b29187b8108e84138
+  "xinetd.init:"	766afdb7ef8a808b9f12ae9009d828d2bc91387a
+  "xinetd-servers:"	07dde93a7f80225139503484a1c19386dfa0523c
+  "xinetd-services:"	b5b53a3ff1fed01e91fc9c6eefb50c5ec5e5c6e3
+  "xinetd.sysconf:"	72eacdf9e6911fef2e50a6cc04a9c584ba83d6c5
+  "xinetd-tdtime:"	30e265e7d550bb93df1cb68ae38aa27220a9d0ca
+  "xinetd-ttime:"	f40ef45f61b3642856f526461b4ddc4f9b0c9496
+  "xinetd-uchargen:"	332eea1c4b0b6fedf6547f09a8015aad5724e9b6
+  "xinetd-udtime:"	3d76182941cbc044a33e6166c7f1035bb34e9df5
+  "xinetd-uecho:"	f1b9f2ec480138531249d472a1af5891c3513232
+  "xinetd-utime:"	bc78833c6a3296ff69bed2af2eeaf6dfae39dfe5
+  "xinetd-xadmin:"	862a05f7ea7629cd23f2a48b406da16a2e732d74
