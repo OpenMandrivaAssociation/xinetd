@@ -1,0 +1,246 @@
+<!-- X-URL: http://www.xinetd.org/faq.html -->
+<!-- Date: Sun, 23 Jul 2000 04:23:34 GMT -->
+<!-- Last-Modified: Mon, 10 Apr 2000 18:14:41 GMT -->
+<BASE HREF="http://www.xinetd.org/faq.html">
+
+<html>
+<head>
+<title>xinetd faq</title>
+</head>
+<body bgcolor=#ffffff link="blue" vlink="blue">
+<center><h2>xinetd FAQ</h2></center>
+<hr noshade>
+
+<dl>
+<dt><a href="#what">What is xinetd</a>
+<dt><a href="#compat">Is it compatible with inetd ?</a>
+<dt><a href="#why">Why should I use xinetd?</a>
+<dt><a href="#who">Who is responsible for xinetd?</a>
+<dt><a href="#2.2">What's up with xinetd 2.2.1?</a>
+<dt><a href="#care">I am not a system administrator; what do I care about an inetd replacement ?</a>
+<dt><a href="#where">Where can I get xinetd?</a>
+<dt><a href="#qmail">Has anyone gotten xinetd working with qmail?</a>
+<dt><a href="#support">What platforms does xinetd work on?</a>
+<dt><a href="#coexist">xinetd doesn't work well with RPC, I need RPC and
+I really want to run xinetd.  Can I?</a>
+<dt><a href="#itox">How do I use itox?</a>
+<dt><a href="#libwrap">Does xinetd support tcpwrappers?</a>
+<dt><a href="#ipv6">Does xinetd support IPv6?</a>
+<dt><a href="#v6error">No services start with IPv6!  What's the deal?</a>
+<dt><a href="#bsd">What's this setgroups(0, NULL) error?</a>
+<dt><a href="#telnet">Why can't telnetd start normally on Linux?</a>
+<dt><a href="#stunnel">How can I use xinetd to wrap SSL around services?</a>
+</dl>
+<hr noshade>
+<strong><a name="what">Q. What is xinetd ?</a><br></strong>
+A. xinetd is a replacement for inetd, the internet services daemon.<br>
+<br>
+<strong><a name="care">Q: I am not a system administrator; what do I care about an inetd replacement ?</a></strong>
+<br>
+A: xinetd is not just an inetd replacement. Anybody can use it to start servers
+	that don't require privileged ports because xinetd does not require that the 
+	services in its configuration file be listed in /etc/services.
+<br>
+<br>
+<strong><a name="compat">Q. Is it compatible with inetd ?</a><br></strong>
+A. No, its configuration file has a different format than inetd's one
+   and it understands different signals. However the signal-to-action 
+	assignment can be changed and a program has been included to convert 
+	inetd.conf to xinetd.conf.
+<br>
+<br>
+<br>
+<strong><a name="why">Q. Why should I use it ?</a><br></strong>
+A. Because it is a lot better (IMHO) than inetd. Here are the reasons:
+<br>
+<br>
+<dl>
+<dt>      1) It can do access control on all services based on:
+	<dl>
+   <dt>         a. address of remote host
+   <dt>         b. time of access
+   <dt>         c. name of remote host
+   <dt>         d. domain name of remote host
+	</dl>
+<dt>      2) Access control works on all services, whether multi-threaded or
+         single-threaded and for both the TCP and UDP protocols.
+         All UDP packets can be checked as well as all TCP connections.
+
+<dt>      3) It provides hard reconfiguration:
+	<dl>
+   <dt>         a. kills servers for services that are no longer in the
+               configuration file
+   <dt>         b. kills servers that no longer meet the access control criteria
+	</dl>
+<dt>      4) It can prevent denial-of-access attacks by
+   <dl>
+   <dt>        a. placing limits on the number of servers for each service
+               (avoids process table overflows)
+   <dt>         b. placing an upper bound on the number of processes it will fork
+   <dt>         c. placing limits on the size of log files it creates
+   <dt>         d. placing limits on the number of connection a single host can initiate
+   <dt>         e. place limits on the rate of incoming connections
+   <dt>         f. discontinue services if the load exceeds specified limit
+	</dl>
+<dt>      5) Extensive logging abilities:
+	<dl>
+   <dt>         a. for every server started it can log:
+		<dl>
+      <dt>              i) the time when the server was started
+      <dt>            ii) the remote host address
+      <dt>           iii) who was the remote user (if the other end runs a
+                       RFC-931/RFC-1413 server)
+      <dt>            iv) how long the server was running
+      <dt>        (i, ii and iii can be logged for failed attempts too).
+		</dl>
+    <dt>        b. for some services, if the access control fails, it can
+               log information about the attempted access (for example,
+               it can log the user name and command for the rsh service)
+	</dl>
+<dt>      6) No limit on number of server arguments
+<dt>      7) You can bind specifc services to specific IP's on your host machine
+</dl>
+<br>
+<br>
+<strong><a name="who">Q. Whom should I thank/blame for this program ?</a><br></strong>
+A. panos@cs.colorado.edu originally wrote this program, but 
+<a href="mailto:bbraun@synack.net">I</a> am fielding
+bug reports at this time.
+<br>
+<br>
+<strong><a name="2.2">Q. What's up with 2.2.1 version of xinetd?</a></strong>
+<br>
+A. The most recent original version of xinetd was 2.1.1 with patches bringing it up to 2.1.8.  Someone else (whom I also cannot get in touch with) created xinetd 2.2.1.  The copyright included with xinetd specified the required versioning to be the official release of xinetd (2.1.8 in this case) and a fourth version number tacked on to indicate the modification level.  This is the versioning I have adopted.
+<br>
+<br>
+<strong><a name="where">Q. Where can I find the latest-and-greatest version ?</a><br></strong>
+A. The xinetd source can be obtained from 
+<a href="http://www.synack.net/xinetd">http://www.synack.net/xinetd</a>
+<br>
+<br>
+<strong><a name="qmail">Q. Has anyone been able to get qmail working with xinetd?</a><br></strong>
+A. yes, here is the entry info
+<pre>
+service smtp
+{
+        socket_type     = stream
+        protocol        = tcp
+        wait            = no
+        user            = qmaild
+        id              = smtp
+        server          = /var/qmail/bin/tcp-env
+        server_args     = /var/qmail/bin/qmail-smtpd
+        log_on_success -= DURATION USERID PID HOST EXIT
+        log_on_failure -= USERID HOST ATTEMPT RECORD
+}
+</pre> Contributed by: god@g0d.tbe.net<br>
+<br>
+<strong><a name="support">Q. What platforms is xinetd know to work on?</a><br></strong>
+A. I have run it on Solaris 2.6 (sparc and x86), Linux, BSDi, and 
+IRIX 5.3 and 6.2.  The original package ran on SunOS 4 and Ultrix.
+<br>
+<br>
+<strong><a name="chroot">Q. How to do setup a chrooted environment for a service?</a></strong><br>
+A. Here is the config file entry:
+<pre>
+service telnet_chroot
+{
+        log_on_success  = HOST PID DURATION USERID
+        log_on_failure 	= HOST RECORD USERID
+	no_access 	= 152.30.11.93
+        socket_type     = stream
+        protocol        = tcp
+	port 		= 8000
+        wait            = no
+        user            = root
+        server          = /usr/sbin/chroot
+	server_args 	= /var/public/servers /usr/libexec/telnetd
+}
+</pre> Contributed by: lburns@sasquatch.com
+<br>
+<br>
+<strong><a name="coexist">Q. xinetd doesn't work well with RPC, I need RPC and
+I really want to run xinetd.  Can I?</a><br></strong>
+A. Yes.  xinetd and inetd should happily coexist.  Have your RPC stuff run
+from your normal inetd (removing all other services from your inetd.conf), 
+then have xinetd run all your other services.
+<br>
+<br>
+<strong><a name="itox">Q. How do I use itox?</a></strong><br>
+A. itox reads in a regular inetd.conf file from stdin and writes an xinetd.conf
+file to stdout.  In general, you use the command:<br>
+<tt>itox &lt /etc/inetd.conf &gt /etc/xinetd.conf</tt>
+<br>
+If your inetd.conf does not have explicit paths to each of the 
+daemons, you must use the <i>-daemon_dir</i> option.  Suppose all your
+daemons live in /usr/sbin, use the following command:<br>
+<tt> itox -daemon_dir=/usr/sbin &lt /etc/inetd.conf &gt /etc/xinetd.conf</tt>
+<br>
+itox is rather old and hasn't been updated for a while.  xconv.pl is a
+perl script that is a little better about converting modern inetd.conf
+files.  It's usage is similar to itox's.
+<br>
+<br>
+<strong><a name="libwrap">Q. Does xinetd support libwrap (tcpwrappers)?</a></strong><br>
+A. Yes.  xinetd can be compiled with libwrap support by passing 
+<tt>--with-libwrap</tt> as an option to the <tt>configure</tt> script.  
+When xinetd is compiled with libwrap support, all services can use the 
+<tt>/etc/host.allow</tt> and <tt>/etc/host.deny</tt> access control.  
+xinetd can also be configured to use tcpd in the traditional inetd style.  
+This requires the use of the NAMEINARGS flag, and the name of the real
+daemon be passed in as server_args.  Here is an example for using telnet 
+with tcpd:
+<pre>
+service telnet
+{
+	flags       = REUSE NAMEINARGS
+	protocol    = tcp
+	socket_type = stream
+	wait        = no
+	user        = telnetd
+	server      = /usr/sbin/tcpd
+	server_args = /usr/sbin/in.telnetd
+}
+</pre>
+<strong><a name="ipv6">Q. Does xinetd support IPv6?</a></strong><br>
+A.  Yes.  xinetd can be compiled with IPv6 support by adding the
+<tt>--with-inet6</tt> option to the <tt>configure</tt> script.
+Access control is functional with IPv6.  You can use ipv4 mapped
+addresses, or give normal dotted quad ipv4 addresses for access
+control, and xinetd will map them to ipv6 addresses.
+<br>
+<br>
+<strong><a name="v6error">Q. No services start with IPv6!  What's the deal?</a></strong><br>
+A.  When you compile IPv6 support in, all sockets are IPv6 sockets.
+If your kernel doesn't understand what an IPv6 socket is, all attempts
+to create sockets will fail, and no services will start.  Only compile
+xinetd with IPv6 support if your kernel supports IPv6.
+<br>
+<br>
+<strong><a name="bsd">Q. What's this setgroups(0, NULL) error?</a></strong><br>
+A.  By default, xinetd does not allow group permissions to the server
+processes, and it does this by setting the groups of the child process
+to nothing.  Some BSD's have a problem with this.  To avoid this error,
+put the directive <tt>groups = yes</tt> into your services.  This says
+to allow the server process to have all the group privleges entitled
+to the user the server process is running as.
+<br>
+<br>
+<strong><a name="telnet">Q. Why can't telnetd start normally on Linux?</a></strong><br>
+A. On some Linux distributions, the telnet daemon starts as a nonprivleged
+user, but the user belongs to groups that allow it to open new tty's, and
+to update utmp.  By default, xinetd does not allow group permissions to the
+server process, so telnetd can fail to start properly.  To get the server
+process to posess the proper groups, use the <tt>groups = yes</tt> directive
+for the telnet service.  This will tell xinetd that it is OK for the server
+process to start with all the groups the user has access to.
+<br>
+<br>
+<strong><a name="stunnel">Q. How do I use xinetd to wrap SSL around services</a></strong><br>
+A. Use the program <a href="http://mike.daewoo.com.pl/computer/stunnel/">
+stunnel</a> to wrap SSL around services.  This can actually be used
+by an inetd.
+<br>
+<br>
+</body>
+</html>

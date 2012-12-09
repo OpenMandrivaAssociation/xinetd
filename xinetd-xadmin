@@ -1,0 +1,11 @@
+service xadmin
+{
+        type           = INTERNAL
+        socket_type    = stream
+        protocol       = tcp
+        user           = root
+        wait           = no
+        port           = 7000
+        only_from      = 127.0.0.1
+        disable        = yes
+}

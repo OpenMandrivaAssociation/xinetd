@@ -1,0 +1,106 @@
+#!/bin/sh
+
+# chkconfig: 345 56 50
+# description: This startup script launches xinetd daemon
+
+### BEGIN INIT INFO
+# Provides: xinetd
+# Required-Start: $network $syslog
+# Required-Stop: $network $syslog
+# Default-Start: 345
+# Short-Description: A powerful replacement for inetd
+# Description: This startup script launches xinetd daemon
+### END INIT INFO
+
+# Local variables
+NAME=xinetd
+BINARY=$NAME
+PROCESS=$NAME
+LOCKFILE=/var/lock/subsys/$NAME
+PIDFILE=/var/run/$NAME.pid
+
+# Source function library.
+. /etc/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ "$NETWORKING" = "no" ] && exit 0
+
+# Load service configuration
+[ -f /etc/sysconfig/xinetd ] && . /etc/sysconfig/xinetd
+
+
+start(){
+    # Check if it is already running
+    if [ ! -f $LOCKFILE ]; then
+	echo -n "Starting $NAME"
+
+	# Need to get rid of localization for external services - 
+	# it doesn't make much sense to have i18n on the server side here
+	export LANG=C
+	export LC_ALL=C
+	daemon $BINARY -stayalive -reuse -pidfile $PIDFILE $EXTRAOPTIONS
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && touch $LOCKFILE
+	echo
+    fi
+}
+
+stop(){
+    echo -n "Stopping $NAME"
+    killproc $PROCESS
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && rm -f $LOCKFILE
+    echo
+}
+
+function restart() {
+    stop
+    start
+}
+
+reload(){
+    echo -n $"Reloading $NAME: "
+    killproc $PROCESS -USR2
+    RETVAL=$?
+    echo
+}
+
+RETVAL=0
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart)
+	restart
+	;;
+    reload)
+	reload
+	;;
+    condrestart)
+	if [ -f $LOCKFILE ]; then
+	    restart
+	fi
+	;;
+    condreload)
+	if [ -f $LOCKFILE ]; then
+	    reload
+	fi
+	;;
+    status)
+	status $PROCESS
+	RETVAL=$?
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart|reload|condrestart|condreload|status}"
+	RETVAL=1
+	;;
+esac
+
+exit $RETVAL

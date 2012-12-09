@@ -1,7 +1,7 @@
 Summary: 	Powerful replacement for inetd
 Name: 		xinetd
 Version: 	2.3.14
-Release: 	%mkrel 13
+Release: 	%mkrel 15
 Group: 		System/Base
 License: 	BSD
 URL: 		http://www.xinetd.org
@@ -175,4 +175,92 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/xinetd.d/*
 
+
+
+
+%changelog
+* Sat May 07 2011 Oden Eriksson <oeriksson@mandriva.com> 2.3.14-13mdv2011.0
++ Revision: 671323
+- mass rebuild
+
+* Sat Dec 04 2010 Oden Eriksson <oeriksson@mandriva.com> 2.3.14-12mdv2011.0
++ Revision: 608212
+- rebuild
+
+* Wed Mar 17 2010 Oden Eriksson <oeriksson@mandriva.com> 2.3.14-11mdv2010.1
++ Revision: 524446
+- rebuilt for 2010.1
+
+* Thu Dec 25 2008 Oden Eriksson <oeriksson@mandriva.com> 2.3.14-10mdv2009.1
++ Revision: 319107
+- rebuild
+
+* Wed Jun 18 2008 Thierry Vignaud <tv@mandriva.org> 2.3.14-9mdv2009.0
++ Revision: 226045
+- rebuild
+
+* Mon Feb 18 2008 Thierry Vignaud <tv@mandriva.org> 2.3.14-8mdv2008.1
++ Revision: 171187
+- rebuild
+- fix "foobar is blabla" summary (=> "blabla") so that it looks nice in rpmdrake
+
+* Thu Jan 31 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.14-7mdv2008.1
++ Revision: 160874
+- Fix initscript so that it returns the proper value on status action.
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Thu Jun 28 2007 Andreas Hasenack <andreas@mandriva.com> 2.3.14-6mdv2008.0
++ Revision: 45529
+- use serverbuild macro
+
+
+* Mon Mar 05 2007 Guillaume Rousse <guillomovitch@mandriva.org> 2.3.14-5mdv2007.0
++ Revision: 133367
+- obsoletes xinetd-ipv6
+
+* Tue Feb 27 2007 Guillaume Rousse <guillomovitch@mandriva.org> 2.3.14-4mdv2007.1
++ Revision: 126594
+- init script harmonization with other packages
+- large installation sequence cleanup
+  don't ship library man pages, as the library is not shipped itself
+  init script is not configuration
+- drop ugly dual binary setup, and only ship one unique xinetd version
+- spec cleanup
+
+  + Andreas Hasenack <andreas@mandriva.com>
+    - bump release
+    - use C locale instead of en_US, so we don't have to require
+      locales-en to be installed (#19106 and #26202)
+    - bunzipped some files
+    - Import xinetd
+
+* Wed Sep 13 2006 Andreas Hasenack <andreas@mandriva.com> 2.3.14-2mdv2007.0
+- don't ignore return values in the init script
+
+* Tue Jan 31 2006 Warly <warly@mandriva.com> 2.3.14-1mdk
+- new version
+
+* Mon Jan 09 2006 Olivier Blin <oblin@mandriva.com> 2.3.13-7mdk
+- fix typo in initscripts
+
+* Mon Jan 09 2006 Olivier Blin <oblin@mandriva.com> 2.3.13-6mdk
+- convert parallel init to LSB
+- fix pre/post requires
+
+* Mon Jan 02 2006 Oden Eriksson <oeriksson@mandriva.com> 2.3.13-5mdk
+- fix deps
+
+* Sun Jan 01 2006 Couriousous <couriousous@mandriva.org> 2.3.13-4mdk
+- Add parallel init stuff
+
+* Sun Jan 01 2006 Mandriva Linux Team <http://www.mandrivaexpert.com/> 2.3.13-3mdk
+- Rebuild
+
+* Sun Jul 31 2005 Nicolas Lécureuil <neoclust@mandriva.org> 2.3.13-2mdk
+- Fix Build with gcc4 ( Fedora )
 
