@@ -1,11 +1,11 @@
-Summary: 	Powerful replacement for inetd
-Name: 		xinetd
-Version: 	2.3.14
-Release: 	%mkrel 15
-Group: 		System/Base
-License: 	BSD
-URL: 		http://www.xinetd.org
-Source: 	http://www.xinetd.org/%{name}-%{version}.tar.bz2
+Summary:	Powerful replacement for inetd
+Name:		xinetd
+Version:	2.3.14
+Release:	16
+Group:		System/Base
+License:	BSD
+URL:		http://www.xinetd.org
+Source0:	http://www.xinetd.org/%{name}-%{version}.tar.bz2
 Source1:	xinetd.init
 Source2:	xinetd.default.config
 Source3:	convert.pl
@@ -27,12 +27,12 @@ Requires(post):	rpm-helper
 Requires(postun):	rpm-helper
 Requires(preun):	rpm-helper
 BuildRequires:	tcp_wrappers-devel
-Obsoletes:  xinetd-ipv6
-Obsoletes:  xinetd-devel
-Obsoletes:  netkit-base
-Provides:   xinetd-devel
-Provides:   netkit-base
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	tirpc-devel
+Obsoletes:	xinetd-ipv6 < %{version}-%{release}
+Obsoletes:	xinetd-devel < %{version}-%{release}
+Obsoletes:	netkit-base < %{version}-%{release}
+Provides:	xinetd-devel
+Provides:	netkit-base
 
 %description
 xinetd is a powerful replacement for inetd.
@@ -50,10 +50,10 @@ for your internal network, but not the rest of the world.  Or to have
 a different service running on the same port, but different interfaces.
 
 %package simple-services
-Summary: Internal xinetd simple services
-Group: System/Base
-License: BSD
-Requires: xinetd
+Summary:	Internal xinetd simple services
+Group:		System/Base
+License:	BSD
+Requires:	xinetd
 
 %description simple-services
 Internal xinetd simple services (not very useful one):
@@ -118,7 +118,6 @@ install -m 0644 %SOURCE50 FAQ.html
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall \
     DAEMONDIR=%{buildroot}%{_sbindir} \
     MANDIR=%{buildroot}/%{_mandir} \
@@ -151,9 +150,6 @@ rm -f %{buildroot}%{_sbindir}/itox
 rm -f %{buildroot}%{_sbindir}/xconv.pl
 rm -f %{buildroot}/%{_mandir}/man8/itox*
 
-%clean
-rm -rf %{buildroot}
-
 %post
 %_post_service %{name}
 
@@ -161,7 +157,6 @@ rm -rf %{buildroot}
 %_preun_service  %{name}
 
 %files
-%defattr(-,root,root)
 %doc INSTALL README FAQ.html CHANGELOG COPYRIGHT xinetd/sample.conf
 %config(noreplace) %{_sysconfdir}/sysconfig/xinetd
 %config(noreplace) %{_sysconfdir}/xinetd.conf
@@ -172,10 +167,7 @@ rm -rf %{buildroot}
 %{_mandir}/*/*
 
 %files simple-services
-%defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/xinetd.d/*
-
-
 
 
 %changelog
@@ -261,6 +253,6 @@ rm -rf %{buildroot}
 * Sun Jan 01 2006 Mandriva Linux Team <http://www.mandrivaexpert.com/> 2.3.13-3mdk
 - Rebuild
 
-* Sun Jul 31 2005 Nicolas Lécureuil <neoclust@mandriva.org> 2.3.13-2mdk
+* Sun Jul 31 2005 Nicolas LÃ©cureuil <neoclust@mandriva.org> 2.3.13-2mdk
 - Fix Build with gcc4 ( Fedora )
 
