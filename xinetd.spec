@@ -1,11 +1,12 @@
 Summary:	Powerful replacement for inetd
 Name:		xinetd
-Version:	2.3.14
-Release:	16
+Version:	2.3.15
+Release:	1
 Group:		System/Base
 License:	BSD
 URL:		http://www.xinetd.org
-Source0:	http://www.xinetd.org/%{name}-%{version}.tar.bz2
+Source0:	http://www.xinetd.org/%{name}-%{version}.tar.gz
+Patch0:		xinetd-2.3.15-tirpc.patch
 Source1:	xinetd.init
 Source2:	xinetd.default.config
 Source3:	convert.pl
@@ -22,6 +23,7 @@ Source13:	xinetd-servers
 Source14:	xinetd-services
 Source15:	xinetd-xadmin
 Source50:	faq.html
+Source100:	%name.rpmlintrc
 Requires:	tcp_wrappers
 Requires(post):	rpm-helper
 Requires(postun):	rpm-helper
@@ -109,6 +111,7 @@ Show servers running and available services
 
 %prep
 %setup -q
+%apply_patches
 install -m 0644 %SOURCE50 FAQ.html
 #chmod a+r INSTALL README FAQ.html CHANGELOG COPYRIGHT xinetd/sample.conf
 

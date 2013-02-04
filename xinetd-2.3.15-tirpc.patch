@@ -1,0 +1,11 @@
+--- xinetd-2.3.15/xinetd/Makefile.in.bero	2013-02-04 21:22:00.374517368 +0100
++++ xinetd-2.3.15/xinetd/Makefile.in	2013-02-04 21:22:07.599434271 +0100
+@@ -40,7 +40,7 @@ PREFIX      = @prefix@
+ 
+ INSTALL_CMD = @INSTALL@
+ 
+-LIBS        = -lsio -lmisc -lxlog -lportable -lstr -lpset @LIBS@
++LIBS        = -lsio -lmisc -lxlog -lportable -lstr -lpset -ltirpc @LIBS@
+ 
+ INCLUDEDIR  = -I../libs/include
+ LIBDIR      = -L../libs/lib
