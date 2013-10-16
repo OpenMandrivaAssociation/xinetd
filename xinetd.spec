@@ -1,7 +1,7 @@
 Summary:	Powerful replacement for inetd
 Name:		xinetd
 Version:	2.3.15
-Release:	3
+Release:	4
 Group:		System/Base
 License:	BSD
 URL:		http://www.xinetd.org
