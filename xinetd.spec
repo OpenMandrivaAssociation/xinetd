@@ -112,7 +112,7 @@ Show servers running and available services
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 install -m 0644 %{SOURCE50} FAQ.html
 #chmod a+r INSTALL README FAQ.html CHANGELOG COPYRIGHT xinetd/sample.conf
 
