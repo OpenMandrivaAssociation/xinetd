@@ -4,7 +4,7 @@ Version:	2.3.15
 Release:	16
 Group:		System/Base
 License:	BSD
-URL:		http://www.xinetd.org
+URL:		https://www.xinetd.org
 Source0:	http://www.xinetd.org/%{name}-%{version}.tar.gz
 Patch0:		xinetd-2.3.15-tirpc.patch
 Patch1:		xinetd-2.3.15-CVE-2013-4342.patch
