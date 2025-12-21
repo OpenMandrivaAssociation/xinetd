@@ -29,6 +29,11 @@ Requires:	tcp_wrappers
 Requires(post):	rpm-helper
 Requires(postun):	rpm-helper
 Requires(preun):	rpm-helper
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	tcp_wrappers-devel
 BuildRequires:	tirpc-devel
 Obsoletes:	xinetd-ipv6 < %{version}-%{release}
